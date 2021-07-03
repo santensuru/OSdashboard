@@ -1,27 +1,29 @@
 extend layout
 
 block content
+  div
+    video#video_player(width="320" height="240" controls)
+      source(src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4")
   p
-    | Vivamus hendrerit arcu sed erat molestie
-    | vehicula. Sed auctor neque eu tellus
-    | rhoncus ut eleifend nibh porttitor. Ut in.
-    
-  p
-    | Donec congue lacinia dui, a porttitor
-    | lectus condimentum laoreet. Nunc eu
-    | ullamcorper orci. Quisque eget odio ac
-    | lectus vestibulum faucibus eget in metus.
-    | In pellentesque faucibus vestibulum. Nulla
-    | at nulla justo, eget luctus tortor.
+    | Your browser does not support the video tag.
+  div#show
 
 block sidebar
   .widget
-    h1 Widget
-    p
-      | Sed auctor neque eu tellus rhoncus ut
-      | eleifend nibh porttitor. Ut in nulla enim.
-    
-    p
-      | Vivamus hendrerit arcu sed erat molestie
-      | vehicula.
+    h1 Video List
+    div
+      input(type="radio" name="video" value="1" checked)
+      label bbb
+    div
+      input(type="radio" name="video" value="2")
+      label bison
+    div
+      input(type="radio" name="video" value="3")
+      label map
+    div
+      input(type="radio" name="video" value="4")
+      label bubble
+    div
+      input(type="radio" name="video" value="5")
+      label wave
 
