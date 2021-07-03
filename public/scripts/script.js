@@ -13,7 +13,7 @@ $(document).ready(function(){
     var n = $(this).val();
 
     $('#show').html("<a href='" + array_url[n] + "' target='_blank'>" + array_url[n] + "</href>");
-    $("<video id='video_player' width='320' height='240' controls autoplay>" +
+    $("<video id='video_player' width='320' height='240' controls autoplay muted>" +
       "<source src='" + array_url[n] + "' type='video/mp4' />" +
       "</video>").replaceAll("#video_player");
 

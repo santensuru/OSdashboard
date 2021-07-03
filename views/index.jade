@@ -2,9 +2,10 @@ extend layout
 
 block content
   div
-    video#video_player(width="320" height="240" controls autoplay)
+    video#video_player(width="320" height="240" controls autoplay muted)
       source(src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4")
-  p#show
+  div#show
+    a(href="https://www.w3schools.com/html/mov_bbb.mp4" target="_blank") https://www.w3schools.com/html/mov_bbb.mp4
 
 block sidebar
   .widget
