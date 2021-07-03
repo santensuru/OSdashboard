@@ -144,7 +144,6 @@ header {
      * prefixes here. Nib will
      * add them for us
      */
-  -webkit-border-radius: 3px;
   border-radius: 3px;
   border: 1px solid #ccc;
   margin-left: 20px;
@@ -157,7 +156,6 @@ header {
   margin: 13px 10px 4px;
   padding-bottom: 10px;
   border-bottom: 1px dotted #ddd;
-  -webkit-border-radius: 2px 2px 0px 0px;
   border-radius: 2px 2px 0px 0px;
   margin-bottom: 10px;
 }
