@@ -2,28 +2,17 @@ extend layout
 
 block content
   div
-    video#video_player(width="320" height="240" controls)
+    video#video_player(width="320" height="240" controls autoplay)
       source(src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4")
-  p
-    | Your browser does not support the video tag.
-  div#show
+  p#show
 
 block sidebar
   .widget
     h1 Video List
-    div
-      input(type="radio" name="video" value="1" checked)
-      label bbb
-    div
-      input(type="radio" name="video" value="2")
-      label bison
-    div
-      input(type="radio" name="video" value="3")
-      label map
-    div
-      input(type="radio" name="video" value="4")
-      label bubble
-    div
-      input(type="radio" name="video" value="5")
-      label wave
+    - array = ["bbb", "bison", "map", "bubble", "wave", "bear"]
+      ul#video_list
+        - for (var i = 0; i < 6; ++i) {
+            li(value=i)
+              input.btn.btn-outline-primary.video_btn(type="button" value=array[i])
+        - }
 
