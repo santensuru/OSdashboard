@@ -11,7 +11,7 @@ A basic Video Player using HTML5 & jQuery.
 Modification
 ------------
 
-Main engine: express@4.x, pug@3.x and stylus.
+Main engine: [express@4.x](https://github.com/expressjs/express), [pug@3.x](https://github.com/pugjs/pug) and [stylus](https://github.com/stylus/stylus).
 
 Libraries: jQuery & Bootstrap.
 
