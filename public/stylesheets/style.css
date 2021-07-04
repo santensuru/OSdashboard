@@ -123,16 +123,20 @@ header {
   text-shadow: 0px -1px 0px #df1806;
 }
 .container {
-  width: 500px;
+  width: 600px;
+  height: 350px;
   margin: 50px auto;
   overflow: hidden;
 }
 .main-content {
   float: left;
-  width: 300px;
+  width: 350px;
 }
 .main-content p {
   margin-bottom: 20px;
+}
+.main-content #show {
+  margin-top: 60px;
 }
 .sidebar {
   float: left;
@@ -144,7 +148,6 @@ header {
      * prefixes here. Nib will
      * add them for us
      */
-  -webkit-border-radius: 3px;
   border-radius: 3px;
   border: 1px solid #ccc;
   margin-left: 20px;
@@ -157,7 +160,6 @@ header {
   margin: 13px 10px 4px;
   padding-bottom: 10px;
   border-bottom: 1px dotted #ddd;
-  -webkit-border-radius: 2px 2px 0px 0px;
   border-radius: 2px 2px 0px 0px;
   margin-bottom: 10px;
 }
@@ -175,4 +177,8 @@ footer {
   border-top: 1px dotted #ccc;
   padding-top: 5px;
   font-size: 13px;
+}
+.video_btn {
+  margin: 1px 2px;
+  width: 98%;
 }
