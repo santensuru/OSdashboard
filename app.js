@@ -7,7 +7,8 @@ var express = require('express')
   , favicon = require('serve-favicon')
   , logger = require('morgan')
   , static = require('serve-static')
-  , os = require('os');
+  , os = require('os')
+  , osu = require('node-os-utils');
 
 
 var app = express()
@@ -36,14 +37,25 @@ app.get('/', function (req, res) {
   )
 });
 
+var cpuUsage;
+
 app.get('/usage', function (req, res, next) {
+  gotCpu();
   var param = {"result": {
     "cpus": os.cpus(), 
     "totalmem": os.totalmem(), 
-    "freemem": os.freemem()
+    "freemem": os.freemem(),
+    "cpuusage": cpuUsage
   }};
   res.header('Content-Type', 'application/json; charset=utf-8')
   res.send(param)
 });
+
+function gotCpu() {
+  osu.cpu.usage()
+  .then(cpuPercentage => {
+    cpuUsage = cpuPercentage; // 10.38
+  });
+}
 
 app.listen(3000);

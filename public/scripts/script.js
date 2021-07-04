@@ -3,6 +3,7 @@ $(document).ready(function(){
     var cpus;
     var totalmem;
     var freemem;
+    var cpuusage;
 
     $.ajax({
       url: "/usage",
@@ -11,12 +12,14 @@ $(document).ready(function(){
         cpus = data.result.cpus;
         totalmem = data.result.totalmem;
         freemem = data.result.freemem;
+        cpuusage = data.result.cpuusage;
         return;
       }
     }).done(function() {
       update_cpus(isFirst, cpus);
       // alert(JSON.stringify(freemem) + "/" + JSON.stringify(totalmem));
       update_memory(isFirst, freemem, totalmem);
+      update_cpuusage(isFirst, cpuusage);
     });
   }
 
@@ -30,6 +33,7 @@ $(document).ready(function(){
 
   var myCPUsCharts = [];
   var myMemChart;
+  var myCPUusageChart;
 
   function update_cpus(isFirst, json) {
     // alert(json.result.length);
@@ -99,7 +103,7 @@ $(document).ready(function(){
   function update_memory(isFirst, free, total) {
     // alert(json.result.length);
     if (isFirst) {
-      $('#cpus').append("<div class='widget'><h1>Memory Usage</h1><canvas id='mem' width='400' height='390' /></div>");
+      $('#cpus').append("<div class='widget'><h1>Memory usage</h1><canvas id='mem' width='400' height='390' /></div>");
 
       var ctx = document.getElementById('mem').getContext('2d');
       //var json = JSON.parse(a());
@@ -138,6 +142,52 @@ $(document).ready(function(){
         [
           total - free,
           free
+        ]);
+    }
+  }
+
+  function update_cpuusage(isFirst, usage) {
+    // alert(json.result.length);
+    if (isFirst) {
+      $('#cpus').append("<div class='widget'><h1>CPU usage</h1><canvas id='cpuu' width='400' height='390' /></div>");
+
+      var ctx = document.getElementById('cpuu').getContext('2d');
+      //var json = JSON.parse(a());
+      
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['used', 'free'],
+          datasets: [{
+            label: 'memory',
+            data: [
+              usage,
+              100 - usage
+            ],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          }
+        }
+      });
+
+      myCPUusageChart = myChart;
+    } else {
+      updateData(myCPUusageChart,
+        [
+          usage,
+          100 - usage
         ]);
     }
   }
