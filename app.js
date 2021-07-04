@@ -36,6 +36,22 @@ app.get('/', function (req, res) {
   )
 })
 
-console.log(os.cpus());
+app.get('/cpus', function (req, res, next) {
+  var param = {"result":os.cpus()};
+  res.header('Content-Type', 'application/json; charset=utf-8')
+  res.send(param)
+})
+
+app.get('/totalmem', function (req, res, next) {
+  var param = {"result":os.totalmem()};
+  res.header('Content-Type', 'application/json; charset=utf-8')
+  res.send(param)
+})
+
+app.get('/freemem', function (req, res, next) {
+  var param = {"result":os.freemem()};
+  res.header('Content-Type', 'application/json; charset=utf-8')
+  res.send(param)
+})
 
 app.listen(3000)

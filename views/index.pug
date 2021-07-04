@@ -1,19 +1,6 @@
 extend layout
 
-block content
-  div
-    video#video_player(width="320" height="240" controls autoplay muted)
-      source(src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4")
-  div#show
-    a(href="https://www.w3schools.com/html/mov_bbb.mp4" target="_blank") https://www.w3schools.com/html/mov_bbb.mp4
-
 block sidebar
-  .widget
-    h1 Video List
-    - array = ["bbb", "bison", "map", "bubble", "wave", "bear"]
-      ul#video_list
-        - for (var i = 0; i < 6; ++i) {
-            li(value=i)
-              input.btn.btn-outline-primary.video_btn(type="button" value=array[i])
-        - }
+  div#cpus
+      
 
