@@ -1,5 +1,5 @@
 {
-  "name": "A basic Video Player using HTML5 & jQuery",
+  "name": "VideoPlayer",
   "version": "1.0.0",
   "private": "true",
   "main": "app.js",
