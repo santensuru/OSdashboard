@@ -25,8 +25,8 @@ app.use(stylus.middleware(
   { src: __dirname + '/public'
   , compile: compile
   }
-))
-app.use(static(__dirname + '/public'))
+));
+app.use(static(__dirname + '/public'));
 
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
@@ -34,24 +34,16 @@ app.get('/', function (req, res) {
   res.render('index',
   { title : 'Home' }
   )
-})
+});
 
-app.get('/cpus', function (req, res, next) {
-  var param = {"result":os.cpus()};
+app.get('/usage', function (req, res, next) {
+  var param = {"result": {
+    "cpus": os.cpus(), 
+    "totalmem": os.totalmem(), 
+    "freemem": os.freemem()
+  }};
   res.header('Content-Type', 'application/json; charset=utf-8')
   res.send(param)
-})
+});
 
-app.get('/totalmem', function (req, res, next) {
-  var param = {"result":os.totalmem()};
-  res.header('Content-Type', 'application/json; charset=utf-8')
-  res.send(param)
-})
-
-app.get('/freemem', function (req, res, next) {
-  var param = {"result":os.freemem()};
-  res.header('Content-Type', 'application/json; charset=utf-8')
-  res.send(param)
-})
-
-app.listen(3000)
+app.listen(3000);

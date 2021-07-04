@@ -5,35 +5,18 @@ $(document).ready(function(){
     var freemem;
 
     $.ajax({
-      url: "/cpus",
+      url: "/usage",
       success: function(data) {
         // alert(JSON.stringify(data));
-        // update_cpus(isFirst, data);
-        cpus = data;
+        cpus = data.result.cpus;
+        totalmem = data.result.totalmem;
+        freemem = data.result.freemem;
         return;
       }
     }).done(function() {
-      $.ajax({
-        url: "/totalmem",
-        success: function(data) {
-          // alert(JSON.stringify(data));
-          totalmem = data;
-          return;
-        }
-      }).done(function() {
-        $.ajax({
-          url: "/freemem",
-          success: function(data) {
-            // alert(JSON.stringify(data));
-            freemem = data;
-            return;
-          }
-        }).done(function() {
-          update_cpus(isFirst, cpus);
-          // alert(JSON.stringify(freemem) + "/" + JSON.stringify(totalmem));
-          update_memory(isFirst, freemem.result, totalmem.result);
-        });
-      });
+      update_cpus(isFirst, cpus);
+      // alert(JSON.stringify(freemem) + "/" + JSON.stringify(totalmem));
+      update_memory(isFirst, freemem, totalmem);
     });
   }
 
@@ -51,7 +34,7 @@ $(document).ready(function(){
   function update_cpus(isFirst, json) {
     // alert(json.result.length);
     var i=0;
-    for (i=0; i<json.result.length; i++) {
+    for (i=0; i<json.length; i++) {
 
       if (isFirst) {
         $('#cpus').append("<div class='widget'><h1>CPU-" + i + "</h1><canvas id='cpu_" + i + "' width='400' height='400' /></div>");
@@ -66,11 +49,11 @@ $(document).ready(function(){
             datasets: [{
               label: 'cpu times',
               data: [
-                json.result[i].times.user,
-                json.result[i].times.nice,
-                json.result[i].times.sys,
-                json.result[i].times.idle,
-                json.result[i].times.irq
+                json[i].times.user,
+                json[i].times.nice,
+                json[i].times.sys,
+                json[i].times.idle,
+                json[i].times.irq
               ],
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -98,17 +81,12 @@ $(document).ready(function(){
         // console.log(myCPUsCharts.length);
         updateData(myCPUsCharts[i],
           [
-            json.result[i].times.user,
-            json.result[i].times.nice,
-            json.result[i].times.sys,
-            json.result[i].times.idle,
-            json.result[i].times.irq
+            json[i].times.user,
+            json[i].times.nice,
+            json[i].times.sys,
+            json[i].times.idle,
+            json[i].times.irq
           ]);
-        // console.log(i, json.result[i].times.user,
-        //     json.result[i].times.nice,
-        //     json.result[i].times.sys,
-        //     json.result[i].times.idle,
-        //     json.result[i].times.irq);
       }
     }
   }
