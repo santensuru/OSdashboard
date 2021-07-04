@@ -31,30 +31,44 @@ app.use(static(__dirname + '/public'));
 
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
+var isFirst = true;
+
 app.get('/', function (req, res) {
+  if (isFirst) {
+    updateUtilization();
+    isFirst = false;
+  }
   res.render('index',
   { title : 'Home' }
   )
 });
 
-var cpuUsage;
+var cpus, totalmem, freemem, cpuusage;
 
 app.get('/usage', function (req, res, next) {
-  gotCpu();
   var param = {"result": {
-    "cpus": os.cpus(), 
-    "totalmem": os.totalmem(), 
-    "freemem": os.freemem(),
-    "cpuusage": cpuUsage
+    "cpus": cpus, 
+    "totalmem": totalmem, 
+    "freemem": freemem,
+    "cpuusage": cpuusage
   }};
   res.header('Content-Type', 'application/json; charset=utf-8')
   res.send(param)
 });
 
+function updateUtilization() {
+  cpus = os.cpus(); 
+  totalmem = os.totalmem(); 
+  freemem = os.freemem();
+  gotCpu();
+}
+setInterval(updateUtilization, 2000);
+isFirst = false;
+
 function gotCpu() {
   osu.cpu.usage()
   .then(cpuPercentage => {
-    cpuUsage = cpuPercentage; // 10.38
+    cpuusage = cpuPercentage; // 10.38
   });
 }
 

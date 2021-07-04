@@ -111,12 +111,12 @@ $(document).ready(function(){
       var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: ['used', 'free'],
+          labels: ['used', 'unused'],
           datasets: [{
             label: 'memory',
             data: [
-              total - free,
-              free
+              Math.round((total - free) / 1024 / 1024 / 1024 * 100) / 100,
+              Math.round(free / 1024 / 1024 / 1024 * 100) / 100
             ],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
@@ -140,8 +140,8 @@ $(document).ready(function(){
     } else {
       updateData(myMemChart,
         [
-          total - free,
-          free
+          Math.round((total - free) / 1024 / 1024 / 1024 * 100) / 100,
+          Math.round(free / 1024 / 1024 / 1024 * 100) / 100
         ]);
     }
   }
@@ -157,12 +157,12 @@ $(document).ready(function(){
       var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: ['used', 'free'],
+          labels: ['utilized', 'idle'],
           datasets: [{
-            label: 'memory',
+            label: 'cpu',
             data: [
-              usage,
-              100 - usage
+              Math.round(usage * 100) / 100,
+              Math.round((100 - usage) * 100) / 100
             ],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
@@ -186,8 +186,8 @@ $(document).ready(function(){
     } else {
       updateData(myCPUusageChart,
         [
-          usage,
-          100 - usage
+          Math.round(usage * 100) / 100,
+          Math.round((100 - usage) * 100) / 100
         ]);
     }
   }
