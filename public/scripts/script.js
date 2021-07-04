@@ -37,7 +37,7 @@ $(document).ready(function(){
     for (i=0; i<json.length; i++) {
 
       if (isFirst) {
-        $('#cpus').append("<div class='widget'><h1>CPU-" + i + "</h1><canvas id='cpu_" + i + "' width='400' height='400' /></div>");
+        $('#cpus').append("<div class='widget'><h1>CPU-" + i + " ticks</h1><canvas id='cpu_" + i + "' width='400' height='390' /></div>");
 
         var ctx = document.getElementById('cpu_' + i).getContext('2d');
         //var json = JSON.parse(a());
@@ -73,6 +73,11 @@ $(document).ready(function(){
               ],
               borderWidth: 1
             }]
+          },
+          options: {
+            legend: {
+              display: false
+            }
           }
         });
 
@@ -94,7 +99,7 @@ $(document).ready(function(){
   function update_memory(isFirst, free, total) {
     // alert(json.result.length);
     if (isFirst) {
-      $('#cpus').append("<div class='widget'><h1>Mem</h1><canvas id='mem' width='400' height='400' /></div>");
+      $('#cpus').append("<div class='widget'><h1>Memory Usage</h1><canvas id='mem' width='400' height='390' /></div>");
 
       var ctx = document.getElementById('mem').getContext('2d');
       //var json = JSON.parse(a());
@@ -104,7 +109,7 @@ $(document).ready(function(){
         data: {
           labels: ['used', 'free'],
           datasets: [{
-            label: 'cpu times',
+            label: 'memory',
             data: [
               total - free,
               free
@@ -119,6 +124,11 @@ $(document).ready(function(){
             ],
             borderWidth: 1
           }]
+        },
+        options: {
+          legend: {
+            display: false
+          }
         }
       });
 
