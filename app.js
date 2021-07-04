@@ -32,11 +32,11 @@ app.use(static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 var isFirst = true;
+var count = 0;
 
 app.get('/', function (req, res) {
   if (isFirst) {
     updateUtilization();
-    isFirst = false;
   }
   res.render('index',
   { title : 'Home' }
@@ -46,6 +46,10 @@ app.get('/', function (req, res) {
 var cpus, totalmem, freemem, cpuusage;
 
 app.get('/usage', function (req, res, next) {
+  if (count >= 5) {
+    setInterval(updateUtilization, 2000);
+  }
+  count = 0;
   var param = {"result": {
     "cpus": cpus, 
     "totalmem": totalmem, 
@@ -61,9 +65,18 @@ function updateUtilization() {
   totalmem = os.totalmem(); 
   freemem = os.freemem();
   gotCpu();
+
+  isFirst = false;
+  count++;
+
+  console.log("run");
+  if (count >= '5') {
+    clearInterval(this);
+    console.log("stop");
+  }
+  console.log(count);
 }
 setInterval(updateUtilization, 2000);
-isFirst = false;
 
 function gotCpu() {
   osu.cpu.usage()
