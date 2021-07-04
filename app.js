@@ -7,6 +7,7 @@ var express = require('express')
   , favicon = require('serve-favicon')
   , logger = require('morgan')
   , static = require('serve-static')
+  , os = require('os');
 
 
 var app = express()
@@ -34,5 +35,7 @@ app.get('/', function (req, res) {
   { title : 'Home' }
   )
 })
+
+console.log(os.cpus());
 
 app.listen(3000)
