@@ -4,6 +4,7 @@ $(document).ready(function(){
     var totalmem;
     var freemem;
     var cpuusage;
+    var disks;
 
     $.ajax({
       url: "/usage",
@@ -13,6 +14,7 @@ $(document).ready(function(){
         totalmem = data.result.totalmem;
         freemem = data.result.freemem;
         cpuusage = data.result.cpuusage;
+        disks = data.result.disks;
         return;
       }
     }).done(function() {
@@ -20,6 +22,7 @@ $(document).ready(function(){
       // alert(JSON.stringify(freemem) + "/" + JSON.stringify(totalmem));
       update_memory(isFirst, freemem, totalmem);
       update_cpuusage(isFirst, cpuusage);
+      update_disks(isFirst, disks);
     });
   }
 
@@ -34,6 +37,7 @@ $(document).ready(function(){
   var myCPUsCharts = [];
   var myMemChart;
   var myCPUusageChart;
+  var myDisksCharts = [];
 
   function update_cpus(isFirst, json) {
     // alert(json.result.length);
@@ -189,6 +193,58 @@ $(document).ready(function(){
           Math.round(usage * 100) / 100,
           Math.round((100 - usage) * 100) / 100
         ]);
+    }
+  }
+
+  function update_disks(isFirst, json) {
+    // alert(json.result.length);
+    // alert(JSON.stringify(json));
+    var i=0;
+    for (i=0; i<json.length; i++) {
+
+      if (isFirst) {
+        $('#cpus').append("<div class='widget'><h1>Drive " + json[i]._mounted + " usage</h1><canvas id='disk_" + i + "' width='400' height='390' /></div>");
+
+        var ctx = document.getElementById('disk_' + i).getContext('2d');
+        //var json = JSON.parse(a());
+        
+        var myChart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['used', 'free'],
+            datasets: [{
+              label: 'disk',
+              data: [
+                Math.round(json[i]._used / 1024 / 1024 / 1024 * 100) / 100,
+                Math.round(json[i]._available / 1024 / 1024 / 1024 * 100) / 100
+              ],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            legend: {
+              display: false
+            }
+          }
+        });
+
+        myDisksCharts.push(myChart);
+      } else {
+        // console.log(myCPUsCharts.length);
+        updateData(myDisksCharts[i],
+          [
+            Math.round(json[i]._used / 1024 / 1024 / 1024 * 100) / 100,
+            Math.round(json[i]._available / 1024 / 1024 / 1024 * 100) / 100
+          ]);
+      }
     }
   }
 

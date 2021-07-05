@@ -8,7 +8,8 @@ var express = require('express')
   , logger = require('morgan')
   , static = require('serve-static')
   , os = require('os')
-  , osu = require('node-os-utils');
+  , osu = require('node-os-utils')
+  , nodeDiskInfo = require('node-disk-info');
 
 
 var app = express()
@@ -19,9 +20,9 @@ function compile(str, path) {
     .use(nib());
 }
 
-app.set('views', __dirname + '/views')
-app.set('view engine', 'pug')
-app.use(logger('dev'))
+app.set('views', __dirname + '/views');
+app.set('view engine', 'pug');
+app.use(logger('dev'));
 app.use(stylus.middleware(
   { src: __dirname + '/public'
   , compile: compile
@@ -43,7 +44,7 @@ app.get('/', function (req, res) {
   )
 });
 
-var cpus, totalmem, freemem, cpuusage;
+var cpus, totalmem, freemem, cpuusage, disksutilization;
 
 app.get('/usage', function (req, res, next) {
   if (count >= 5) {
@@ -54,7 +55,8 @@ app.get('/usage', function (req, res, next) {
     "cpus": cpus, 
     "totalmem": totalmem, 
     "freemem": freemem,
-    "cpuusage": cpuusage
+    "cpuusage": cpuusage,
+    "disks": disksutilization
   }};
   res.header('Content-Type', 'application/json; charset=utf-8')
   res.send(param)
@@ -65,6 +67,7 @@ function updateUtilization() {
   totalmem = os.totalmem(); 
   freemem = os.freemem();
   gotCpu();
+  gotDisk();
 
   isFirst = false;
   count++;
@@ -82,6 +85,16 @@ function gotCpu() {
   osu.cpu.usage()
   .then(cpuPercentage => {
     cpuusage = cpuPercentage; // 10.38
+  });
+}
+
+function gotDisk() {
+  nodeDiskInfo.getDiskInfo()
+  .then(disks => {
+    disksutilization = disks;
+  })
+  .catch(reason => {
+    console.error(reason);
   });
 }
 

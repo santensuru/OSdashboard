@@ -1,6 +1,6 @@
 {
   "name": "OSdashboard",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "private": "true",
   "main": "app.js",
   "dependencies": {
@@ -11,6 +11,7 @@
     "serve-favicon": "^2.5.0",
     "morgan": "^1.10.0",
     "serve-static": "^1.14.1",
-    "node-os-utils": "^1.3.5"
+    "node-os-utils": "^1.3.5",
+    "node-disk-info": "^1.3.0"
   }
 }
