@@ -2,5 +2,13 @@ extend layout
 
 block sidebar
   div#cpus
+    .widget
+      h1 Settings
+      - array = ["CPUs ticks", "Memory usage", "CPU usage", "Disks usage"]
+      - for (var i = 0; i < array.length; ++i) {
+        div.form-check.video_btn
+          input.form-check-input(type="checkbox" id="checkbox-"+i value=i checked=(i>0 === true ? "checked" : undefined))
+          label.form-check-label(for="checkbox-"+i)= array[i]
+      - } 
       
 

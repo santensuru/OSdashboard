@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  var numCPUs, numDisks;
   function a(isFirst) {
     var cpus;
     var totalmem;
@@ -15,6 +16,11 @@ $(document).ready(function(){
         freemem = data.result.freemem;
         cpuusage = data.result.cpuusage;
         disks = data.result.disks;
+
+        if (isFirst) {
+          numCPUs = cpus.length;
+          numDisks = disks.length;
+        }
         return;
       }
     }).done(function() {
@@ -45,7 +51,7 @@ $(document).ready(function(){
     for (i=0; i<json.length; i++) {
 
       if (isFirst) {
-        $('#cpus').append("<div class='widget'><h1>CPU-" + i + " ticks</h1><canvas id='cpu_" + i + "' width='400' height='390' /></div>");
+        $('#cpus').append("<div class='widget d-none'><h1>CPU-" + i + " ticks</h1><canvas id='cpu_" + i + "' width='400' height='390' /></div>");
 
         var ctx = document.getElementById('cpu_' + i).getContext('2d');
         //var json = JSON.parse(a());
@@ -255,4 +261,42 @@ $(document).ready(function(){
       }
       chart.update();
   }
+
+  $('.video_btn input').change(function() {
+    // this will contain a reference to the checkbox  
+    // alert(this.value); 
+    var i;
+    if (this.checked) {
+      // the checkbox is now checked 
+      // alert($('cpu_0').parent().parent());
+      if (this.value == 0) {
+        for (i=0; i<numCPUs; i++) {
+          $('#cpu_'+i).parent().removeClass("d-none");
+        }
+      } else if (this.value == 1) {
+          $('#mem').parent().removeClass("d-none");
+      } else if (this.value == 2) {
+          $('#cpuu').parent().removeClass("d-none");
+      } else if (this.value == 3) {
+        for (i=0; i<numDisks; i++) {
+          $('#disk_'+i).parent().removeClass("d-none");
+        }
+      }
+    } else {
+      // the checkbox is now no longer checked
+      if (this.value == 0) {
+        for (i=0; i<numCPUs; i++) {
+          $('#cpu_'+i).parent().addClass("d-none");
+        }
+      } else if (this.value == 1) {
+          $('#mem').parent().addClass("d-none");
+      } else if (this.value == 2) {
+          $('#cpuu').parent().addClass("d-none");
+      } else if (this.value == 3) {
+        for (i=0; i<numDisks; i++) {
+          $('#disk_'+i).parent().addClass("d-none");
+        }
+      }
+    }
+  });
 });
