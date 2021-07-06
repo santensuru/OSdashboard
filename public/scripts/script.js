@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  var ostype;
   var numCPUs, numDisks;
   function a(isFirst) {
     var cpus;
@@ -11,12 +12,13 @@ $(document).ready(function(){
       url: "/usage",
       success: function(data) {
         // alert(JSON.stringify(data));
+        ostype = data.result.ostype;
         cpus = data.result.cpus;
         totalmem = data.result.totalmem;
         freemem = data.result.freemem;
         cpuusage = data.result.cpuusage;
         disks = data.result.disks;
-	// alert(JSON.stringify(disks));
+        // alert(JSON.stringify(disks));
 
         if (isFirst) {
           numCPUs = cpus.length;
@@ -211,7 +213,7 @@ $(document).ready(function(){
     for (i=0; i<json.length; i++) {
 
       if (isFirst) {
-        $('#cpus').append("<div class='widget'><h1>Drive " + json[i]._mounted + " usage</h1><canvas id='disk_" + i + "' width='400' height='390' /></div>");
+        $('#cpus').append("<div class='widget'><h1 title='" + json[i]._mounted + "'>Drive " + json[i]._mounted + " usage</h1><canvas id='disk_" + i + "' width='400' height='390' /></div>");
 
         var ctx = document.getElementById('disk_' + i).getContext('2d');
         //var json = JSON.parse(a());

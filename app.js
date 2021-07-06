@@ -40,11 +40,11 @@ app.get('/', function (req, res) {
     updateUtilization();
   }
   res.render('index',
-  { title : 'Home' }
+  { title : 'Home', "ostype": ostype }
   )
 });
 
-var cpus, totalmem, freemem, cpuusage, disksutilization;
+var ostype, cpus, totalmem, freemem, cpuusage, disksutilization;
 
 app.get('/usage', function (req, res, next) {
   if (count >= 5) {
@@ -63,6 +63,7 @@ app.get('/usage', function (req, res, next) {
 });
 
 function updateUtilization() {
+  ostype = os.type();
   cpus = os.cpus(); 
   totalmem = os.totalmem(); 
   freemem = os.freemem();
