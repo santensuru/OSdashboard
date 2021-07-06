@@ -17,7 +17,7 @@ Main engine: [express@4.x](https://github.com/expressjs/express), [pug@3.x](http
 
 Libraries: jQuery & Bootstrap.
 
-OS Libraries: [node-os-utils](https://github.com/SunilWang/node-os-utils)
+OS Libraries: [node-os-utils](https://github.com/SunilWang/node-os-utils), [node-disk-info](https://github.com/cristiammercado/node-disk-info)
 
 Favicon source: https://icon-icons.com/download/190860/ICO/512/
 
