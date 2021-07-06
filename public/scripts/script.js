@@ -16,6 +16,7 @@ $(document).ready(function(){
         freemem = data.result.freemem;
         cpuusage = data.result.cpuusage;
         disks = data.result.disks;
+	// alert(JSON.stringify(disks));
 
         if (isFirst) {
           numCPUs = cpus.length;
@@ -110,8 +111,9 @@ $(document).ready(function(){
     }
   }
 
-  function update_memory(isFirst, free, total) {
+  function update_memory(isFirst, free=0, total=0) {
     // alert(json.result.length);
+    // console.log("free: " + free + ", total: " + total);
     if (isFirst) {
       $('#cpus').append("<div class='widget'><h1>Memory usage</h1><canvas id='mem' width='400' height='390' /></div>");
 
@@ -125,8 +127,8 @@ $(document).ready(function(){
           datasets: [{
             label: 'memory',
             data: [
-              Math.round((total - free) / 1024 / 1024 / 1024 * 100) / 100,
-              Math.round(free / 1024 / 1024 / 1024 * 100) / 100
+              ((total - free) / 1024 / 1024 / 1024).toPrecision(3),
+              (free / 1024 / 1024 / 1024).toPrecision(3)
             ],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
@@ -150,13 +152,13 @@ $(document).ready(function(){
     } else {
       updateData(myMemChart,
         [
-          Math.round((total - free) / 1024 / 1024 / 1024 * 100) / 100,
-          Math.round(free / 1024 / 1024 / 1024 * 100) / 100
+          ((total - free) / 1024 / 1024 / 1024).toPrecision(3),
+          (free / 1024 / 1024 / 1024).toPrecision(3)
         ]);
     }
   }
 
-  function update_cpuusage(isFirst, usage) {
+  function update_cpuusage(isFirst, usage=0) {
     // alert(json.result.length);
     if (isFirst) {
       $('#cpus').append("<div class='widget'><h1>CPU usage</h1><canvas id='cpuu' width='400' height='390' /></div>");
@@ -171,8 +173,8 @@ $(document).ready(function(){
           datasets: [{
             label: 'cpu',
             data: [
-              Math.round(usage * 100) / 100,
-              Math.round((100 - usage) * 100) / 100
+              (usage).toPrecision(3),
+              (100 - usage).toPrecision(3)
             ],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
@@ -196,8 +198,8 @@ $(document).ready(function(){
     } else {
       updateData(myCPUusageChart,
         [
-          Math.round(usage * 100) / 100,
-          Math.round((100 - usage) * 100) / 100
+          (usage).toPrecision(3),
+          (100 - usage).toPrecision(3)
         ]);
     }
   }
@@ -221,8 +223,8 @@ $(document).ready(function(){
             datasets: [{
               label: 'disk',
               data: [
-                Math.round(json[i]._used / 1024 / 1024 / 1024 * 100) / 100,
-                Math.round(json[i]._available / 1024 / 1024 / 1024 * 100) / 100
+                (json[i]._used / 1024 / 1024 / 1024).toPrecision(3),
+                (json[i]._available / 1024 / 1024 / 1024).toPrecision(3)
               ],
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -247,8 +249,8 @@ $(document).ready(function(){
         // console.log(myCPUsCharts.length);
         updateData(myDisksCharts[i],
           [
-            Math.round(json[i]._used / 1024 / 1024 / 1024 * 100) / 100,
-            Math.round(json[i]._available / 1024 / 1024 / 1024 * 100) / 100
+            (json[i]._used / 1024 / 1024 / 1024).toPrecision(3),
+            (json[i]._available / 1024 / 1024 / 1024).toPrecision(3)
           ]);
       }
     }
