@@ -4,9 +4,10 @@ block sidebar
   div#cpus
     .widget
       h1 Settings
-      - json = JSON.stringify(ostype)
-      - disk = "Disks usage (" + (json === "Linux" ? "TB":"GB") + ")"
+      - json = JSON.stringify(ostype) + " " + JSON.stringify(osrelease)
+      - disk = "Disks usage (" + (ostype === "Linux" ? "TB":"GB") + ")"
       - array = ["CPUs ticks", "Memory usage (GB)", "CPU usage (%)", disk]
+        p=json
       - for (var i = 0; i < array.length; ++i) {
         div.form-check.video_btn
           input.form-check-input(type="checkbox" id="checkbox-"+i value=i checked=(i>0 === true ? "checked" : undefined))

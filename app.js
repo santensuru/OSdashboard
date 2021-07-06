@@ -35,16 +35,20 @@ app.use(favicon(__dirname + '/public/images/favicon.ico'));
 var isFirst = true;
 var count = 0;
 
+var ostype, osrelease;
+ostype = os.type();
+osrelease = os.release();
+
 app.get('/', function (req, res) {
   if (isFirst) {
     updateUtilization();
   }
   res.render('index',
-  { title : 'Home', "ostype": ostype }
+  { title : 'Home', "ostype": ostype, "osrelease": osrelease }
   )
 });
 
-var ostype, cpus, totalmem, freemem, cpuusage, disksutilization;
+var cpus, totalmem, freemem, cpuusage, disksutilization;
 
 app.get('/usage', function (req, res, next) {
   if (count >= 5) {
@@ -63,7 +67,6 @@ app.get('/usage', function (req, res, next) {
 });
 
 function updateUtilization() {
-  ostype = os.type();
   cpus = os.cpus(); 
   totalmem = os.totalmem(); 
   freemem = os.freemem();
@@ -100,3 +103,4 @@ function gotDisk() {
 }
 
 app.listen(3000);
+
